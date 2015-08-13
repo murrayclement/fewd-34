@@ -1,0 +1,162 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600);
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+
+body {
+  background-color: #edecea;
+  margin: 0 auto;
+  position: relative;
+  color: #47525c;
+  font-family: 'Montserrat', 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+header {
+  padding: 32px;
+  position: relative;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 100px;
+}
+
+logo {
+  left: 500px;
+}
+
+.content {
+  padding: 32px;
+}
+
+.items {
+  background-color: #fff;
+  float: left;
+  text-align: center;
+  margin: 0 5% 5% 0;
+  width: 30%;
+}
+.items:nth-of-type(3n) {
+  margin-right: 0;
+}
+.items:nth-of-type(3n + 1) {
+  clear: both;
+}
+
+.items img {
+  width: 100%;
+}
+
+.items:hover a {
+  top: 0;
+  transition: 1s;
+  opacity: .75;
+}
+
+.items:hover a span {
+  top: 50%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.items a {
+  position: absolute;
+  opacity: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #47525c;
+}
+
+.fa-shopping-cart {
+  color: #ccc;
+}
+
+li {
+  display: inline;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #47525c;
+}
+
+.divider {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+}
+
+.search {
+  color: #aaa;
+  position: absolute;
+  right: 0px;
+  transition: .5s;
+}
+
+.search:hover {
+  color: #47525c;
+}
+
+.fa-search {
+  color: #aaa;
+  position: absolute;
+  right: 65px;
+}
+
+img {
+  transition: 1s;
+}
+
+img:hover {
+  background-color: red;
+  opacity: 0.3;
+  left: 0px;
+  top: 0px;
+  z-index: -1;
+}
+
+nav {
+  margin: 42px 40px;
+  right: 0px;
+  position: absolute;
+}
+
+nav a {
+  color: #aaa;
+  padding: 10px;
+  transition: 1s;
+}
+
+p {
+  text-align: center;
+  color: #aaa;
+}
+
+div {
+  position: relative;
+  padding: 0em 0em;
+}
+
+main {
+  position: absolute;
+}
+
+.fa-shopping-cart {
+  position: absolute;
+  right: 10px;
+  top: 100px;
+  color: #47525c;
+  padding-bottom: 120px;
+}
+
+article:hover {
+  background-image:url("images/hover.png");
+  cursor: pointer;
+  height: inherit;
+}
