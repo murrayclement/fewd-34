@@ -156,7 +156,5 @@ main {
 }
 
 article:hover {
-  background-image:url("images/hover.png");
   cursor: pointer;
-  height: inherit;
 }
