@@ -77,35 +77,46 @@
 // Set 1
 
 function addListItem() {
-var text = prompt("Add some biz you gotta do bro");
-var list = document.querySelector("#todo-list");
-var listItem = document.createElement("li");
-
-listItem.textContent = text;
-list.appendChild(listItem);
+  // prompt for list item content, save as text
+  var text = prompt("Add some biz you gotta do bro");
+  // find #todo-list, save as list
+  var list = document.querySelector("#todo-list");
+  // create a li, save as ListItem
+  var listItem = document.createElement("li");
+  // apply the content of text to the textContent of listItem
+  listItem.textContent = text;
+  // append the child of list with listItem
+  list.appendChild(listItem);
 }
 
 // Set 2
 
 function addImage() {
-var imgSrc = prompt("Yao Yao, gimme that url bro");
-var imgWidth = prompt("How wide my good bro?");
-var imgHeight = prompt("How tall you want it bro?");
-var imgTag = document.createElement("img");
-
-imgTag.setAttribute("src", imgSrc);
-imgTag.setAttribute("width", imgWidth);
-imgTag.setAttribute("height", imgHeight);
-
-document.querySelector("#image").appendChild(imgTag);
+  // get an image url, save as imgSrc
+  var src = prompt("Yao Yao, gimme that url bro");
+  // get a width for the image, save
+  var width = prompt("How wide my good bro?");
+  // get a height for the image, save
+  var height = prompt("How tall you want it bro?");
+  // create an img
+  var img = document.createElement("img");
+  // set src with the var
+  img.setAttribute("src", src);
+  // set the width with the var
+  img.setAttribute("width", width);
+  //set the height
+  img.setAttribute("height", height);
+  // find and append
+  document.querySelector("#image").appendChild(img);
 }
 
 // Set 3
 
 function makeBold() {
-var paragraph = document.querySelector("#make-me-bold");
-
-paragraph.classList.toggle("bold");
+  // find #make-me-bold, save
+  var paragraph = document.querySelector("#make-me-bold");
+  // toggle the class list onClick to bold
+  paragraph.classList.toggle("bold");
 };
 </script>
   </body>
