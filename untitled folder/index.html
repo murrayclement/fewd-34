@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Web Keyboard</title>
+<style media="screen">
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+$red : #ff6666;
+$orange : #ff9311;
+$yellow : #fdc536;
+$green : #b6b835;
+$blue : #63cdd6;
+$purple : #ac6c82;
+$white : #fefeff;
+$gray : #efefef;
+$smoke : #ddd;
+$black : #222233;
+
+$size : 16px;
+
+$slow : all 1s ease;
+$fast : all .1s ease;
+
+//
+
+body {
+font-family: 'Montserrat', sans-serif;
+box-sizing: border-box;
+text-align:center;
+color: #aaa;
+background: shade($smoke, 7%);
+font-size: $size;
+margin: 0;
+//animation: bg .15s;
+}
+
+.grid {
+border-spacing:.5em;
+position: absolute;
+top: 40%;
+left: 45%;
+transform: translate(-50%, -50%)
+}
+
+.sharp {
+opacity: .25;
+position: absolute;
+top: -3.5em;
+left: .75em;
+border: .2em solid #aaa;
+height: 2em;
+width: 2em;
+border-radius: .5em;
+}
+
+.major {
+opacity: .25;
+position: absolute;
+top: 20em;
+left: .75em;
+border: .2em solid #aaa;
+height: 2em;
+width: 2em;
+border-radius: .5em;
+color: lighten($black, 20%);
+}
+
+.black {
+position: relative;
+width: 50em;
+display: table;
+table-layout: fixed;
+margin:0 0 -1em 0;
+left: 2.25em;
+top: 10em;
+z-index: 100;
+}
+
+.black .key {
+background: $white;
+height: 10em;
+line-height: 2em;
+background: $black;
+border-bottom: 1em solid shade($black, 50%);
+}
+
+span {
+color: lighten($black, 20%);
+}
+
+.key {
+position: relative;
+cursor: pointer;
+display: table-cell;
+padding: 1em;
+vertical-align: bottom;
+transition: $fast;
+user-select: none;
+-webkit-user-select: none;
+border-radius: .25em;
+}
+
+.white {
+width: 50em;
+display: table;
+table-layout: fixed;
+margin:0 0 -1em 0;
+}
+
+.white .key {
+background: $white;
+height: 16em;
+line-height: 2em;
+border-bottom: 1em solid shade($white, 10%);
+}
+
+.hidden {
+visibility: hidden;
+}
+
+.black .key:active {
+background: $black;
+transform: translateY(5px);
+border-bottom: .5em solid shade($black, 50%);
+}
+
+.white .key:active {
+background: desaturate($white, 5%);
+transform: translateY(5px);
+border-bottom: .5em solid shade($white, 10%);
+}
+
+.animate {
+animation: animation .15s;
+}
+
+@-webkit-keyframes animation {
+  0% {
+    background: $white;
+    border-bottom: 1em solid shade($white, 10%);
+  }
+  50% {
+    transform: translateY(5px);
+    border-bottom: .5em solid shade($white, 10%);
+  }
+  100% {
+    border-bottom: 1em solid shade($white, 10%);
+  }
+}
+
+.animate-black {
+animation: animate-black .15s;
+}
+
+@-webkit-keyframes animate-black {
+  0% {
+    background: $black;
+    border-bottom: 1em solid shade($black, 50%);
+  }
+  50% {
+    transform: translateY(5px);
+    border-bottom: .5em solid shade($black, 50%);
+  }
+  100% {
+    border-bottom: 1em solid shade($black, 50%);
+  }
+}
+
+
+.key:active .major {
+opacity: .75;
+
+}
+
+.key:active .sharp {
+opacity: .75;
+}
+
+//
+
+header {
+background-color: $black;
+height: 5em;
+margin: 0;
+padding: 0;
+-webkit-user-select: none;
+position: fixed;
+width: 100%;
+padding-top: 0em;
+z-index: 100;
+transition: $slow;
+}
+
+ul {
+color: $smoke;
+position: absolute;
+list-style-type: none;
+top: 1.75em;
+right: 2em;
+display: inline;
+}
+
+li {
+position: relative;
+display: inline;
+padding-left: 3em;
+top: 1.5em;
+right: 2em;
+}
+
+.current {
+opacity: 1;
+}
+
+.selected {
+color: $blue;
+font-weight : 600;
+}
+
+.selected:before {
+content: '/ ';
+}
+.fa {
+font-size: 3em;
+line-height: 5em;
+}
+
+.logo {
+background-color: $black;
+color: $white;
+cursor: pointer;
+}
+
+.logo:hover .autodesk {
+transition: $slow;
+fill: $blue;
+}
+
+nav a {
+text-decoration: none;
+color: $smoke;
+display: inline;
+transition: $slow;
+opacity: .25;
+border: .15em solid transparent;
+border-radius: 15em;
+padding: .75em;
+font-weight: 400;
+}
+
+nav a:hover {
+color: $white;
+opacity: 1;
+border: .15em solid $white;
+}
+
+nav a:active {
+color: $blue;
+border: .15em solid $blue;
+transition: $fast;
+}
+
+</style>
+
+  </head>
+  <body>
+    <header>
+  <div class="logo">
+<i class="fa fa-keyboard-o"></i>
+  </div>
+  <nav>
+    <ul>
+      <li><a class="current" href="#">piano</a></li>
+      <li><a href="#">organ</a></li>
+      <li><a href="#">synth</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="grid">
+  <div class="black">
+    <div class="key cs">c<span class="pound">#</cspan><div class="sharp">W</div></div>
+    <div class="key ds">d<span>#</cspan><div class="sharp">E</div></div>
+    <div class="key hidden"></div>
+    <div class="key fs">f<span>#</cspan><div class="sharp">T</div></div>
+    <div class="key gs">g<span>#</cspan><div class="sharp">Y</div></div>
+    <div class="key as">a<span>#</cspan><div class="sharp">U</div></div>
+    <div class="key hidden"></div>
+    <div class="key bs"><div class="hidden">2</div>b<span>#</cspan><div class="sharp">O</div></div>
+    <div class="key cs2"><div class="hidden">4</div>c<span>#</cspan><div class="sharp">P</div></div>
+    <div class="key hidden"></div>
+    <div class="key hidden"></div>
+  </div>
+  <div class="white">
+    <div class="key c">C<div class="major">A</div></div>
+    <div class="key d">D<div class="major">S</div></div>
+    <div class="key e">E<div class="major">D</div></div>
+    <div class="key f">F<div class="major">F</div></div>
+    <div class="key g">G<div class="major">G</div></div>
+    <div class="key a">A<div class="major">H</div></div>
+    <div class="key b">B<div class="major">J</div></div>
+    <div class="key c2"><div class="hidden">1</div>C<div class="major">K</div></div>
+    <div class="key d2"><div class="hidden">3</div>D<div class="major">L</div></div>
+    <div class="key e2"><div class="hidden">5</div>E<div class="major">;</div></div>
+    <div class="key f2"><div class="hidden">6</div>F<div class="major">'</div></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+// PRESS ARRAY
+
+var press = new Howl({
+  urls: ['http://murrayclement.github.io/fewd-34/resources/sound/piano-press-short.mp3'],
+  volume: 0.5,
+  sprite: {
+    C: [0, 950],
+    c: [1000, 950],
+    D: [2000, 950],
+    d: [3000, 950],
+    E: [4000, 950],
+    F: [5000, 950],
+    f: [6000, 950],
+    G: [7000, 950],
+    g: [8000, 950],
+    A: [9000, 950],
+    a: [10000, 950],
+    B: [11000, 950],
+    1: [12000, 950],
+    2: [13000, 950],
+    3: [14000, 950],
+    4: [15000, 950],
+    5: [16000, 950],
+    6: [17000, 950],
+  }
+});
+
+// HOLD ARRAY
+
+var hold = new Howl({
+  urls: ['http://murrayclement.github.io/fewd-34/resources/sound/piano-hold.mp3'],
+  volume: 0.5,
+  sprite: {
+    C: [0, 2000],
+    c: [2000, 2000],
+    D: [4000, 2000],
+    d: [6000, 2000],
+    E: [8000, 2000],
+    F: [10000, 2000],
+    f: [12000, 2000],
+    G: [14000, 2000],
+    g: [16000, 2000],
+    A: [18000, 2000],
+    a: [20000, 2000],
+    B: [22000, 2000],
+    1: [24000, 2000],
+    2: [26000, 2000],
+    3: [28000, 2000],
+    4: [30000, 2000],
+    5: [32000, 2000],
+    6: [34000, 2000],
+  }
+});
+
+// LOOPING BUTTON TO NOTE
+
+$(".key").on("mousedown", function() {
+  var note = $(this).text();
+  setTimeout(function() {
+    console.log("press", isMouseDown)
+    if (isMouseDown) {
+      hold.play(note.charAt(0));
+    } else {
+      press.play(note.charAt(0));
+    }
+  }, 100)
+});
+
+var isMouseDown = false;
+
+$(".key").on("mousedown", function(event) {
+  isMouseDown = true;
+});
+
+$(".key").on("mouseup", function(event) {
+  isMouseDown = false;
+});
+
+// KEYBINDING
+
+$("body").on("keydown", function(event) {
+  var key = event.which || event.keyCode;
+
+  var note = {
+    "100": "C"
+  }[key.toString()]
+
+  setTimeout(function() {
+
+    if (isKeyDown) {
+      hold.play(note.charAt(0));
+    } else {
+      press.play(note.charAt(0));
+    }
+  }, 100)
+});
+
+var isKeyDown = false;
+
+$("body").on("keydown", function(event) {
+  isKeyDown = true;
+});
+
+$("body").on("keyup", function(event) {
+  isKeyDown = false;
+});
+
+// KEYBINDING
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 97 || key == 65) {
+    hold.play("C");
+    $(".c").addClass("animate");
+    $(".c").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".c").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 115 || key == 83) {
+    hold.play("D");
+    $(".d").addClass("animate");
+    $(".d").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".d").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 100 || key == 68) {
+    hold.play("E");
+    $(".e").addClass("animate");
+    $(".e").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".e").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 102 || key == 70) {
+    hold.play("F");
+    $(".f").addClass("animate");
+    $(".f").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".f").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 103 || key == 71) {
+    hold.play("G");
+      $(".g").addClass("animate");
+    $(".g").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".g").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 104 || key == 72) {
+    hold.play("A");
+      $(".a").addClass("animate");
+    $(".a").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".a").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 106 || key == 74) {
+    hold.play("B");
+      $(".b").addClass("animate");
+    $(".b").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".b").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 107 || key == 75) {
+    hold.play("1");
+          $(".c2").addClass("animate");
+    $(".c2").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".c2").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 108 || key == 76) {
+    hold.play("3");
+              $(".d2").addClass("animate");
+    $(".d2").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".d2").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 59) {
+    hold.play("5");
+              $(".e2").addClass("animate");
+    $(".e2").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".e2").removeClass("animate");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 39) {
+    hold.play("6");
+              $(".f2").addClass("animate");
+    $(".f2").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".f2").removeClass("animate");
+      });
+  }
+});
+
+// BLACK KEYS
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 119 || key == 87) {
+    hold.play("c");
+              $(".cs").addClass("animate-black");
+    $(".cs").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".cs").removeClass("animate-black");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 101 || key == 69) {
+    hold.play("d");
+                  $(".ds").addClass("animate-black");
+    $(".ds").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".ds").removeClass("animate-black");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 116 || key == 84) {
+    hold.play("f");
+                  $(".fs").addClass("animate-black");
+    $(".fs").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".fs").removeClass("animate-black");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 121 || key == 89) {
+    hold.play("g");
+                  $(".gs").addClass("animate-black");
+    $(".gs").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".gs").removeClass("animate-black");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 117 || key == 85) {
+    hold.play("a");
+                  $(".as").addClass("animate-black");
+    $(".as").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".as").removeClass("animate-black");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 111 || key == 79) {
+    hold.play("2");
+                  $(".bs").addClass("animate-black");
+    $(".bs").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".bs").removeClass("animate-black");
+      });
+  }
+});
+
+$("body").keypress(function findNote(event) {
+  var key = event.which || event.keyCode;
+  if (key == 112 || key == 80) {
+    hold.play("4");
+                  $(".cs2").addClass("animate-black");
+    $(".cs2").one("webkitAnimationEnd oanimationend msAnimationEnd animationend",
+      function() {
+        $(".cs2").removeClass("animate-black");
+      });
+  }
+});
+
+// TOUCH CAPABLE MAYBE
+
+var isTouching = false;
+window.addEventListener('touchstart', function() {
+  document.documentElement.classList.remove('mouse');
+  document.documentElement.classList.add('touch');
+  isTouching = true;
+});
+
+FastClick.attach(document.body);
+
+</script>
+  </body>
+</html>
